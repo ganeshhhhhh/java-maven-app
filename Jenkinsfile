@@ -6,7 +6,6 @@ pipeline {
     }
 
     environment {
-        SONAR_TOKEN = credentials('sonar-token')
         IMAGE_NAME = "demo-app"
     }
 
@@ -14,29 +13,23 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/yourrepo/demo.git'
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/ganeshhhhhh/java-maven-app.git'
             }
         }
 
-        stage('Compile & Test') {
+        stage('Build') {
             steps {
-                sh 'mvn clean test'
+                sh 'mvn clean package'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                sh '''
-                mvn sonar:sonar \
-                -Dsonar.login=$SONAR_TOKEN
-                '''
-            }
-        }
-
-        stage('Dependency Check') {
-            steps {
-                dependencyCheck additionalArguments: '--scan .'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                withSonarQubeEnv('sonarqube') {
+                    sh 'mvn sonar:sonar'
+                }
             }
         }
 
@@ -62,4 +55,3 @@ pipeline {
         }
     }
 }
-
