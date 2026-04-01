@@ -1,6 +1,10 @@
+import org.springframework.web.bind.annotation.*;
+
+@RestController
 public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello DevOps");
+
+    @GetMapping("/")
+    public String hello() {
+        return "Hello DevOps 🚀";
     }
 }
-
