@@ -1,14 +1,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.devops</groupId>
-  <artifactId>java-maven-app</artifactId>
-  <version>1.0</version>
-  <packaging>jar</packaging>
+<groupId>com.devops</groupId> <artifactId>java-maven-app</artifactId> <version>1.0</version> <packaging>jar</packaging>
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
-</project>
 
+  <build>
+    <plugins>
+
+```
+  <!-- Compiler Plugin -->
+  <plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.11.0</version>
+  </plugin>
+
+  <!-- ✅ Make JAR Executable -->
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>3.3.0</version>
+    <configuration>
+      <archive>
+        <manifest>
+          <mainClass>com.devops.App</mainClass>
+        </manifest>
+      </archive>
+    </configuration>
+  </plugin>
+
+  <!-- SonarQube Plugin -->
+  <plugin>
+    <groupId>org.sonarsource.scanner.maven</groupId>
+    <artifactId>sonar-maven-plugin</artifactId>
+    <version>4.0.0.4121</version>
+  </plugin>
+
+</plugins>
+```
+
+  </build>
+
+</project>
